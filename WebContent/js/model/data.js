@@ -121,18 +121,18 @@ var Paddle = function(params) {
 		y =y + yM;
 		vx = x;
 		vy = y;
-		if (y < 0) { // all the way to the top
-			y = 0;
+		if (y < 3) { // all the way to the top
+			y = 3;
 			vy = 0;
-		} else if (y + height > HEIGHT) { // all the way to the bottom
-			y = HEIGHT - height;
+		} else if (y + height > HEIGHT - 3) { // all the way to the bottom
+			y = HEIGHT - height-3;
 			vy = 0;
 		}
-		if (x < 0) { // all the way to the left
-			x = 0;
+		if (x < 3) { // all the way to the left
+			x = 3;
 			vx = 0;
-		} else if (x + width > WIDTH) { // all the way to the right
-			x = WIDTH - width;
+		} else if (x + width > WIDTH-3) { // all the way to the right
+			x = WIDTH - width-3;
 			vx = 0;
 		}
 		if(hitSign===1&&x>WIDTH/2-width){
