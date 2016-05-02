@@ -14,7 +14,23 @@ var Ball = function(params) {
 		context.fillStyle = color;
 		context.fill();
 	}
-
+function getY(y, paddleTopBound, sector){
+	if(paddleTopBound-sector<y&&y<=paddleTopBound){
+		return vy=2;
+	}
+	else if(paddleTopBound-2*sector<y&&y<=paddleTopBound-sector){
+		return vy=1;
+	}
+	else if(y==paddleTopBound-2*sector){
+		return vy=0;
+	}
+	else if(paddleTopBound-3*sector<y&&y<paddleTopBound-2*sector){
+		return vy=-1;
+	}
+	else{
+		return vy=-2;
+	}
+}
 	var update = function(paddleLeft, paddleRight) {
 		x = x + vx;
 		y = y + vy;
@@ -55,13 +71,10 @@ var Ball = function(params) {
 				if (vx > 5) {
 					vx = 5;
 				}
-				if(paddleLeft.y+paddleLeft.height/2>y){
-					vy=-1;
-				}else if(paddleLeft.y+paddleLeft.height/2<y){
-					vy=1;
-				}else{
-					vy=0;
-				}
+				var paddleTopBound=paddleLeft.y+paddleLeft.height;
+				var paddleBottomBound=paddleLeft.y;
+				var sector=paddleLeft.height/4;
+				vy=getY(y, paddleTopBound, sector)
 			}
 
 		}
@@ -74,13 +87,10 @@ var Ball = function(params) {
 				if (vx < -5) {
 					vx = -5;
 				}
-				if(paddleRight.y+paddleRight.height/2>y){
-					vy=-1;
-				}else if(paddleRight.y+paddleRight.height/2<y){
-					vy=1;
-				}else{
-					vy=0;
-				}
+				var paddleTopBound=paddleRight.y+paddleRight.height;
+				var paddleBottomBound=paddleRight.y;
+				var sector=paddleRight.height/4;
+				vy=getY(y, paddleTopBound, sector)
 			}
 		}
 
@@ -92,7 +102,7 @@ var Ball = function(params) {
 };
 
 var Paddle = function(params) {
-	var x, y, width, height, vx, vy, color;
+	var x, y, width, height, vx, vy, color,hitSign;
 	x = params.x;
 	y = params.y;
 	width = params.width;
@@ -125,6 +135,14 @@ var Paddle = function(params) {
 			x = WIDTH - width;
 			vx = 0;
 		}
+		if(hitSign===1&&x>WIDTH/2-width){
+			x=WIDTH/2-width;
+		}
+		if(hitSign===-1&&x<WIDTH/2){
+			x=WIDTH/2;
+		}
+		
+		
 		this.x=x;
 		this.y=y;
 	}
