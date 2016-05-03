@@ -1,5 +1,5 @@
 
-var WIDTH = 400;
+var WIDTH = 600;
 var HEIGHT = 300;
 var paddleWidth = 10;
 var paddleHeight = 50;
