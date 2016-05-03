@@ -9,7 +9,7 @@ grunt.initConfig({
             'src/js/model/data.js', 
             'src/js/controller/pong.js',
             'src/js/game.js'],
-      dest: 'WebContent/dist/all.js',
+      dest: 'WebContent/js/all.js',
     },
   },
   
@@ -19,8 +19,8 @@ grunt.initConfig({
   
   uglify: {
 	    build: {
-	        src: 'WebContent/dist/all.js',
-	        dest: 'WebContent/dist/all.min.js'
+	        src: 'WebContent/js/all.js',
+	        dest: 'WebContent/js/all.min.js'
 	    }
 	},
 //	qunit: {
@@ -65,7 +65,6 @@ grunt.initConfig({
       }
 });
 //3. Where we tell Grunt we plan to use this plug-in.
-//grunt.loadNpmTasks('grunt-jslint');
 grunt.loadNpmTasks('grunt-contrib-concat');
 grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-copy');
