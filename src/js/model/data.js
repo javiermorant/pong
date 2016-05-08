@@ -14,88 +14,52 @@ var Ball = function(params) {
 		context.fillStyle = color;
 		context.fill();
 	}
-function getY(y, paddleTopBound, sector){
-	if(paddleTopBound-sector<y&&y<=paddleTopBound){
-		return vy=2;
-	}
-	else if(paddleTopBound-2*sector<y&&y<=paddleTopBound-sector){
-		return vy=1;
-	}
-	else if(y==paddleTopBound-2*sector){
-		return vy=0;
-	}
-	else if(paddleTopBound-3*sector<y&&y<paddleTopBound-2*sector){
-		return vy=-1;
-	}
-	else{
-		return vy=-2;
-	}
-}
 	var update = function(paddleLeft, paddleRight) {
 		x = x + vx;
 		y = y + vy;
-		var topx = x + radius;
-		var topy = y + radius;
-		var bottomx = x - radius;
-		var bottomy = y - radius;
-		// velocity vector will be updated on events(score, hit the wall, hit by
-		// the paddle)
-		if (x < 0) { // player2 scores
-			//start again
-			x= WIDTH / 2;
-			y = HEIGHT / 2;
-			vx = -3;
-			vy = 0;
-		}
-		if (y < 0) { // HIT top wall
-			vy = -vy
-		}
-		if (x > WIDTH) {// player 1 scores
-			//start again
-			x= WIDTH / 2;
-			y = HEIGHT / 2;
-			vx = 3;
-			vy = 0;
-		}
-		if (y > HEIGHT) {// HIT Bottom wall
-			vy = -vy;
-		}
-		var tol=5;
-		if (vx < 0 && x < WIDTH / 2) {
-			// only playerLeft can Hit the ball
-			if (bottomy+tol > paddleLeft.y
-					&& topy-tol < paddleLeft.y + paddleLeft.height
-					&& bottomx-tol < paddleLeft.x + paddleLeft.width
-					&& paddleLeft.x + paddleLeft.width-tol < topx) {
-				vx = -vx + 1;
-				if (vx > 5) {
-					vx = 5;
-				}
-				var paddleTopBound=paddleLeft.y+paddleLeft.height;
-				var paddleBottomBound=paddleLeft.y;
-				var sector=paddleLeft.height/4;
-				vy=getY(y, paddleTopBound, sector)
-			}
-
-		}
-		if (vx > 0 && x > WIDTH / 2) {
-			// only playerLeft can Hit the ball
-			if (bottomy +tol> paddleRight.y
-					&& topy-tol < paddleRight.y + paddleRight.height
-					&& paddleRight.x -tol< topx && paddleRight.x+tol > bottomx) {
-				vx = -vx - 1;
-				if (vx < -5) {
-					vx = -5;
-				}
-				var paddleTopBound=paddleRight.y+paddleRight.height;
-				var paddleBottomBound=paddleRight.y;
-				var sector=paddleRight.height/4;
-				vy=getY(y, paddleTopBound, sector)
-			}
-		}
-
 	}
+	 var getX = function() { 
+		 return x;
+	 }
+	 var setX = function(value) { 
+		  x = value;
+	 }
+	 var getY = function() { 
+		 return y;
+	 }
+	 var setY = function(value) { 
+		  y = value;
+	 }
+	 var getVY = function() { 
+		 return vy;
+	 }
+	 var setVY = function(value) { 
+		  vy = value;
+	 }
+	 var getVX = function() { 
+		 return vx;
+	 }
+	 var setVX = function(value) { 
+		  vx = value;
+	 }
+	 var getRadius = function() { 
+		 return radius;
+	 }
+	 var setRadius = function(value) { 
+		  radius = value;
+	 }
 	return {
+		getX:getX,
+		getY:getY,
+		getVX:getVX,
+		getVY:getVY,
+		setX:setX,
+		setY:setY,
+		setVX:setVX,
+		setVY:setVY,
+		getRadius:getRadius,
+		setRadius:setRadius,
+		radius : radius,
 		render : render,
 		update : update
 	}
@@ -135,11 +99,12 @@ var Paddle = function(params) {
 			x = WIDTH - width-3;
 			vx = 0;
 		}
-		if(hitSign===1&&x>WIDTH/2-width){
-			x=WIDTH/2-width;
+		var limit=WIDTH/8;
+		if(hitSign===1&&x>(WIDTH/2)-limit-width){
+			x=(WIDTH/2)-limit-width;
 		}
-		if(hitSign===-1&&x<WIDTH/2){
-			x=WIDTH/2;
+		if(hitSign===-1&&x<WIDTH/2+limit){
+			x=WIDTH/2+limit;
 		}
 		
 		
